@@ -96,6 +96,10 @@ public class PlayerContoller : MonoBehaviour
         {
             isJunp = false;
         }
+        else
+        {
+            isJunp = true;
+        }
     }
 }
 

@@ -38,9 +38,9 @@ public class PendulumContoroller : MonoBehaviour
     void Update()
     {
         Move.y -= Gravity * Time.deltaTime;
-        Vector3 TopPos = transform.position+Move;
+        Vector3 TopPos = transform.position+Move;///‚È‚É‚à‚È‚¢ó‘Ô‚Å‚Ì“®‚«
         var RootPos = Root.transform.position;
-        float dis =Vector3.Magnitude( TopPos-RootPos);
+        float dis =Vector3.Magnitude( TopPos-RootPos);///‰½‚à‚È‚¢Žž‚Ì2“_‚Ì‹——£
         Vector3 Tension = Vector3.zero;
         if (dis > RopeLength)
         {
@@ -61,14 +61,15 @@ public class PendulumContoroller : MonoBehaviour
         if(collision.gameObject.name == "Pobject")
            {
             PlayerContoller player= FindObjectOfType<PlayerContoller>();
-            if (player != null&&(player.transform.parent != null))
+            if (player != null&&player.transform.parent == null)
             {
                 Vector3 M=Move;
                 Move = player.SendMove();
                 player.SetDir(M);
                 if (Input.GetMouseButton(0))
                 {
-                     player.transform.SetParent(this.transform);
+                    player.SetDir(Vector3.zero);
+                    player.transform.SetParent(this.transform);
                 }
             }
 
