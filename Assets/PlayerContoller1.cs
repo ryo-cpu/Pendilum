@@ -22,13 +22,38 @@ public class PlayerContoller : MonoBehaviour
     }
     void Update()
     {
+        if (transform.parent != null)
+        {
+            if (!Input.GetMouseButton(0))
+            {
+
+                PendulumContoroller parent = transform.parent.GetComponent<PendulumContoroller>();
+                if (parent == null)
+                {
+                    Debug.LogWarning("親に ParentScript がアタッチされていません");
+                }
+                else
+                {
+                 dir = parent.GetMove()/speed/Time.deltaTime;
+
+                    parent.SetMove(-parent.GetMove()/10);
+                  
+                    rb.useGravity = true;
+                }
+                this.transform.SetParent(null);
+            }
+            else
+            {
+                rb.useGravity = false;
+            }
+        }
         if (isJunp)
         {
 
         }
         else
         {
-            dir = dir * 0.1f;
+            dir = dir * 0.9f;
             // Wキー（前方移動）
             if (Input.GetKey(KeyCode.W))
             {

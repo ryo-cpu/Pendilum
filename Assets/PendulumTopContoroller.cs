@@ -8,13 +8,17 @@ public class PendulumContoroller : MonoBehaviour
     private Vector3 Move;//ìÆÇ´ÇçÏÇÈÇÊÇ§
     private GameObject player;
     public float Gravity = 2.0f;
-     void SetMove(Vector3 move)
+   public  void SetMove(Vector3 move)
     {
         Move = move;
-        
-        
+
+
     }
- 
+    public Vector3 GetMove()
+    {
+     return Move;
+    }
+
 
     // Use this for initialization
     void Start()
@@ -33,7 +37,7 @@ public class PendulumContoroller : MonoBehaviour
     }
     void Update()
     {
-        Move.y -= Gravity;
+        Move.y -= Gravity * Time.deltaTime;
         Vector3 TopPos = transform.position+Move;
         var RootPos = Root.transform.position;
         float dis =Vector3.Magnitude( TopPos-RootPos);
@@ -57,10 +61,15 @@ public class PendulumContoroller : MonoBehaviour
         if(collision.gameObject.name == "Pobject")
            {
             PlayerContoller player= FindObjectOfType<PlayerContoller>();
-            if (player != null)
+            if (player != null&&(player.transform.parent != null))
             {
+                Vector3 M=Move;
                 Move = player.SendMove();
-                player.SetDir(Vector3.zero);
+                player.SetDir(M);
+                if (Input.GetMouseButton(0))
+                {
+                     player.transform.SetParent(this.transform);
+                }
             }
 
         }
