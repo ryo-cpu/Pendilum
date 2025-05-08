@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxJunp: 20
-  speed: 10
+  speed: 100
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +394,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 382247638386229417, guid: 33cece2e2f2ea9f439c53e4f18ba9164, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 100.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 382247638386229417, guid: 33cece2e2f2ea9f439c53e4f18ba9164, type: 3}
       propertyPath: m_LocalPosition.x
       value: -500
       objectReference: {fileID: 0}
@@ -472,7 +476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4655360365240627483, guid: d683405efbc3e4649b7f2b98f91b6c1d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -100
+      value: -181.9
       objectReference: {fileID: 0}
     - target: {fileID: 4655360365240627483, guid: d683405efbc3e4649b7f2b98f91b6c1d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -528,15 +532,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4201584018208961794, guid: 06bfb5aaec203b64ab74d36cd7f2c029, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -47.49
+      value: -29.4
       objectReference: {fileID: 0}
     - target: {fileID: 4201584018208961794, guid: 06bfb5aaec203b64ab74d36cd7f2c029, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.21
+      value: -151.3
       objectReference: {fileID: 0}
     - target: {fileID: 4201584018208961794, guid: 06bfb5aaec203b64ab74d36cd7f2c029, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -169.5
+      value: -88.3
       objectReference: {fileID: 0}
     - target: {fileID: 4201584018208961794, guid: 06bfb5aaec203b64ab74d36cd7f2c029, type: 3}
       propertyPath: m_LocalRotation.w

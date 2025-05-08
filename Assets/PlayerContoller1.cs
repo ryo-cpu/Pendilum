@@ -14,7 +14,7 @@ public class PlayerContoller : MonoBehaviour
     }
    public Vector3 SendMove()
     {
-        return speed * dir * Time.deltaTime;
+        return speed * dir;
     }
    public void SetDir(Vector3 vector)
     {
@@ -22,10 +22,14 @@ public class PlayerContoller : MonoBehaviour
     }
     void Update()
     {
+        transform.rotation = Quaternion.LookRotation(Vector3.zero);
         if (transform.parent != null)
         {
-            if (!Input.GetMouseButton(0))
+           
+            if (Input.GetMouseButtonUp(0))///左クリックが離れた時
             {
+
+                Debug.LogWarning("親に がアタッチされていません");
 
                 PendulumContoroller parent = transform.parent.GetComponent<PendulumContoroller>();
                 if (parent == null)
@@ -34,26 +38,31 @@ public class PlayerContoller : MonoBehaviour
                 }
                 else
                 {
-                 dir = parent.GetMove()/speed/Time.deltaTime;
+                    dir = parent.GetMove();
+                    parent.SetMove(-parent.GetMove()*100);
 
-                    parent.SetMove(-parent.GetMove()/10);
-                  
                     rb.useGravity = true;
+                    rb.isKinematic = false;
+
                 }
                 this.transform.SetParent(null);
             }
             else
             {
                 rb.useGravity = false;
+                rb.isKinematic = true;
+
             }
         }
         if (isJunp)
         {
 
+            transform.position += dir * Time.deltaTime;
+
         }
         else
         {
-            dir = dir * 0.9f;
+            dir = dir * 0.1f;
             // Wキー（前方移動）
             if (Input.GetKey(KeyCode.W))
             {
@@ -87,8 +96,14 @@ public class PlayerContoller : MonoBehaviour
                 isJunp = true;
 
             }
+            if(dir.magnitude>10.0f)
+            {
+                Vector3 NDir=dir.normalized;
+                dir = NDir * 10.0f;
+            }
+            transform.position += speed * dir * Time.deltaTime;
         }
-        transform.position += speed * dir * Time.deltaTime;
+       
     }
     void OnCollisionEnter(Collision collision) 
     { 
@@ -101,5 +116,6 @@ public class PlayerContoller : MonoBehaviour
             isJunp = true;
         }
     }
+    
 }
 

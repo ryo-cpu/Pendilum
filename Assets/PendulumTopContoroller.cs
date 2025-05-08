@@ -16,7 +16,7 @@ public class PendulumContoroller : MonoBehaviour
     }
     public Vector3 GetMove()
     {
-     return Move;
+        return Move*10; 
     }
 
 
@@ -37,7 +37,9 @@ public class PendulumContoroller : MonoBehaviour
     }
     void Update()
     {
-        Move.y -= Gravity * Time.deltaTime;
+       
+        Move.y -= Gravity;//í‚É‘«‚³‚ê‚Ä‚¢‚é‚Ì‚Å‚¢‚Â‚©‰ó‚ê‚é
+       
         Vector3 TopPos = transform.position+Move;///‚È‚É‚à‚È‚¢ó‘Ô‚Å‚Ì“®‚«
         var RootPos = Root.transform.position;
         float dis =Vector3.Magnitude( TopPos-RootPos);///‰½‚à‚È‚¢Žž‚Ì2“_‚Ì‹——£
@@ -51,8 +53,15 @@ public class PendulumContoroller : MonoBehaviour
            
 
         }
-        Move += Tension;
-        transform.position += Move;
+       
+        Move += Tension;//í‚É‘«‚³‚ê‚Ä‚¢‚é‚Ì‚Å‚¢‚Â‚©‰ó‚ê‚é
+        ///uŠÔ‚ÌÅ‘å‘¬“x
+        if (Move.magnitude > 10.0f)
+        {
+            Vector3 NMove = Move.normalized;
+            Move = NMove * 10.0f;
+         }
+        transform.position += Move * Time.deltaTime*10;
 
     }
     private void OnCollisionEnter(Collision collision)
@@ -65,7 +74,7 @@ public class PendulumContoroller : MonoBehaviour
             {
                 Vector3 M=Move;
                 Move = player.SendMove();
-                player.SetDir(M);
+                player.SetDir(M * Time.deltaTime);
                 if (Input.GetMouseButton(0))
                 {
                     player.SetDir(Vector3.zero);
