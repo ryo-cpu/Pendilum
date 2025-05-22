@@ -20,43 +20,78 @@ public class PlayerContoller : MonoBehaviour
     {
         dir = vector;
     }
+   
     void Update()
     {
         transform.rotation = Quaternion.LookRotation(Vector3.zero);
         if (transform.parent != null)
         {
-           
-            if (Input.GetMouseButtonUp(0))///左クリックが離れた時
+
+            PendulumContoroller parent = transform.parent.GetComponent<PendulumContoroller>();
+            if (parent == null)
             {
+                Debug.LogWarning("親に ParentScript がアタッチされていません");
 
-                Debug.LogWarning("親に がアタッチされていません");
-
-                PendulumContoroller parent = transform.parent.GetComponent<PendulumContoroller>();
-                if (parent == null)
-                {
-                    Debug.LogWarning("親に ParentScript がアタッチされていません");
-                }
-                else
-                {
-                    dir = parent.GetMove();
-                    parent.SetMove(-parent.GetMove()*100);
-
-                    rb.useGravity = true;
-                    rb.isKinematic = false;
-
-                }
-                this.transform.SetParent(null);
             }
             else
             {
-                rb.useGravity = false;
-                rb.isKinematic = true;
+                if (Input.GetMouseButtonUp(0))///左クリックが離れた時
+                {
+                    ///離れる時の処理
+                    
+                    dir = parent.GetMove();
+                    parent.SetMove(-dir);
 
+                    Debug.Log(dir);
+
+
+
+                     rb.useGravity = true;
+                     rb.isKinematic = false;
+
+                    this.transform.SetParent(null);
+                }
+                else
+                {
+                    ///くっついてる時の処理
+                    dir=Vector3.zero;
+                    ///playerの動きで振り子に干渉する
+                    // Wキー（前方移動）
+                    if (Input.GetKey(KeyCode.W))
+                    {
+                        dir += transform.forward;
+                    }
+
+                    // Sキー（後方移動）
+                    if (Input.GetKey(KeyCode.S))
+                    {
+                        dir -= transform.forward;
+
+                    }
+
+                    // Dキー（右移動）
+                    if (Input.GetKey(KeyCode.D))
+                    {
+                        dir += transform.right;
+
+                    }
+
+                    // Aキー（左移動）
+                    if (Input.GetKey(KeyCode.A))
+                    {
+                        dir -= transform.right;
+
+                    }
+                    parent.AddMove(dir);
+                    rb.useGravity = false;
+                    rb.isKinematic = true;
+
+                }
             }
         }
         if (isJunp)
         {
-
+            dir = dir * 0.99f;
             transform.position += dir * Time.deltaTime;
 
         }

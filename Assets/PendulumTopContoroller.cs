@@ -14,9 +14,13 @@ public class PendulumContoroller : MonoBehaviour
 
 
     }
+    public void AddMove(Vector3 move)
+    {
+        Move += move;
+    }
     public Vector3 GetMove()
     {
-        return Move*10; 
+        return Move; 
     }
 
 
@@ -39,29 +43,34 @@ public class PendulumContoroller : MonoBehaviour
     {
        
         Move.y -= Gravity;//常に足されているのでいつか壊れる
-       
-        Vector3 TopPos = transform.position+Move;///なにもない状態での動き
+        if (Move.y < -5.0f)
+        {
+            ///重力の最高加速度
+            Move.y = -5.0f;
+        }
+
+        Vector3 TopPos = transform.position + Move;///なにもない状態での動き
         var RootPos = Root.transform.position;
-        float dis =Vector3.Magnitude( TopPos-RootPos);///何もない時の2点の距離
+        float dis = Vector3.Magnitude(TopPos - RootPos);///何もない時の2点の距離
         Vector3 Tension = Vector3.zero;
         if (dis > RopeLength)
         {
-            Vector3 Distance=RootPos-TopPos;
+            Vector3 Distance = RootPos - TopPos;
             Vector3 normalizDistance = Distance.normalized;
             Tension = Distance - (normalizDistance * RopeLength);
 
-           
+
 
         }
-       
-        Move += Tension;//常に足されているのでいつか壊れる
+
+        Move += Tension;
         ///瞬間の最大速度
         if (Move.magnitude > 10.0f)
         {
             Vector3 NMove = Move.normalized;
             Move = NMove * 10.0f;
-         }
-        transform.position += Move * Time.deltaTime*10;
+        }
+        transform.position += (Move)* Time.deltaTime;
 
     }
     private void OnCollisionEnter(Collision collision)
