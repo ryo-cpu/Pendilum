@@ -22,7 +22,7 @@ public class PendulumContoroller : MonoBehaviour
     public Vector3 GetMove()
     {
 
-        Vector3 Dir = transform.position-Root.transform.position;
+        Vector3 Dir = Root.transform.position- transform.position;
         Dir.y = 0;
         Vector3 Dis = Root.transform.position-transform.position;
         Dis.x = 0;
