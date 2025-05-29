@@ -6,6 +6,7 @@ public class PendulumContoroller : MonoBehaviour
     public float RopeLength = 20;
     private GameObject Root;   //eî•ñŠi”[—p
     private Vector3 Move;//“®‚«‚ðì‚é‚æ‚¤
+    private Vector3 tension;//“n‚·—p‚ÌŠi”[
     private GameObject player;
     public float Gravity = 2.0f;
    public  void SetMove(Vector3 move)
@@ -20,7 +21,17 @@ public class PendulumContoroller : MonoBehaviour
     }
     public Vector3 GetMove()
     {
-        return Move; 
+
+        Vector3 Dir = transform.position-Root.transform.position;
+        Dir.y = 0;
+        Vector3 Dis = Root.transform.position-transform.position;
+        Dis.x = 0;
+        Dis.z = 0;
+        Dir = Dir.normalized*Move.magnitude;
+        Dis = Dis.normalized;
+
+        Vector3 P = (Dir+Dis);
+        return P *10; 
     }
 
 
@@ -57,20 +68,25 @@ public class PendulumContoroller : MonoBehaviour
         {
             Vector3 Distance = RootPos - TopPos;
             Vector3 normalizDistance = Distance.normalized;
-            Tension = Distance - (normalizDistance * RopeLength);
+            Tension = Distance-(normalizDistance * RopeLength) ;
+            tension = Tension;
 
-
-
+            Debug.LogWarning(Tension);
+        }
+        else
+        {
+            tension = new Vector3(0,0,0);
         }
 
-        Move += Tension;
+            Move += Tension;
         ///uŠÔ‚ÌÅ‘å‘¬“x
         if (Move.magnitude > 10.0f)
         {
             Vector3 NMove = Move.normalized;
             Move = NMove * 10.0f;
         }
-        transform.position += (Move)* Time.deltaTime;
+        transform.position += (Move)* Time.deltaTime*10;
+        
 
     }
     private void OnCollisionEnter(Collision collision)

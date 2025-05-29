@@ -38,31 +38,33 @@ public class PlayerContoller : MonoBehaviour
                 if (Input.GetMouseButtonUp(0))///左クリックが離れた時
                 {
                     ///離れる時の処理
+
                     
-                    dir = parent.GetMove();
-                    parent.SetMove(-dir);
 
-                    Debug.Log(dir);
+                   
 
 
-
-                     rb.useGravity = true;
-                     rb.isKinematic = false;
+                    rb.useGravity = true;
+                    rb.isKinematic = false;
 
                     this.transform.SetParent(null);
+                    dir = parent.GetMove();
+                    parent.SetMove(-dir);
+                
+
                 }
                 else
                 {
                     ///くっついてる時の処理
-                    dir=Vector3.zero;
+                    dir = Vector3.zero;
                     ///playerの動きで振り子に干渉する
-                    // Wキー（前方移動）
+                    // Wキー（移動）
                     if (Input.GetKey(KeyCode.W))
                     {
                         dir += transform.forward;
                     }
 
-                    // Sキー（後方移動）
+                    // Sキー（減速移動）
                     if (Input.GetKey(KeyCode.S))
                     {
                         dir -= transform.forward;
@@ -82,61 +84,65 @@ public class PlayerContoller : MonoBehaviour
                         dir -= transform.right;
 
                     }
-                    parent.AddMove(dir);
+                    Vector3 All_Power = parent.GetMove();
+                    parent.AddMove(dir * 1f / All_Power.magnitude * Time.deltaTime);
                     rb.useGravity = false;
                     rb.isKinematic = true;
 
                 }
             }
         }
-        if (isJunp)
-        {
-            dir = dir * 0.99f;
-            transform.position += dir * Time.deltaTime;
-
-        }
         else
         {
-            dir = dir * 0.1f;
-            // Wキー（前方移動）
-            if (Input.GetKey(KeyCode.W))
+            if (isJunp)
             {
-                dir += transform.forward;
-            }
-
-            // Sキー（後方移動）
-            if (Input.GetKey(KeyCode.S))
-            {
-                dir -= transform.forward;
+                dir = dir * 0.99f;
+                transform.position += dir * Time.deltaTime;
 
             }
-
-            // Dキー（右移動）
-            if (Input.GetKey(KeyCode.D))
+            else
             {
-                dir += transform.right;
+                dir = dir * 0.1f;
+                // Wキー（前方移動）
+                if (Input.GetKey(KeyCode.W))
+                {
+                    dir += transform.forward;
+                }
 
+                // Sキー（後方移動）
+                if (Input.GetKey(KeyCode.S))
+                {
+                    dir -= transform.forward;
+
+                }
+
+                // Dキー（右移動）
+                if (Input.GetKey(KeyCode.D))
+                {
+                    dir += transform.right;
+
+                }
+
+                // Aキー（左移動）
+                if (Input.GetKey(KeyCode.A))
+                {
+                    dir -= transform.right;
+
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+
+                    rb.linearVelocity = Vector3.up * MaxJunp;
+                    isJunp = true;
+
+                }
+                if (dir.magnitude > 10.0f)
+                {
+                    Vector3 NDir = dir.normalized;
+                    dir = NDir * 10.0f;
+                }
+                transform.position += speed * dir * Time.deltaTime;
             }
-
-            // Aキー（左移動）
-            if (Input.GetKey(KeyCode.A))
-            {
-                dir -= transform.right;
-
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-
-                rb.linearVelocity = Vector3.up * MaxJunp;
-                isJunp = true;
-
-            }
-            if(dir.magnitude>10.0f)
-            {
-                Vector3 NDir=dir.normalized;
-                dir = NDir * 10.0f;
-            }
-            transform.position += speed * dir * Time.deltaTime;
         }
        
     }
