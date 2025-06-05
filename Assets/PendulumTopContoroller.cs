@@ -28,9 +28,9 @@ public class PendulumContoroller : MonoBehaviour
         Dis.x = 0;
         Dis.z = 0;
         Dir = Dir.normalized*Move.magnitude;
-        Dis = Dis.normalized;
+        Dis = Dis.normalized*tension.magnitude;
 
-        Vector3 P = (Dir+Dis);
+        Vector3 P =-(Dir+Dis);
         return P *10; 
     }
 

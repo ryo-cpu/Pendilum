@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraControllrt:MonoBehaviour
+public class CameraController :  MonoBehaviour
 {
     private GameObject player;   //プレイヤー情報格納用
     private Vector3 offset;      //相対距離取得用

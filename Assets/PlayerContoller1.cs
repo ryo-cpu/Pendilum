@@ -20,6 +20,7 @@ public class PlayerContoller : MonoBehaviour
     {
         dir = vector;
     }
+    
    
     void Update()
     {
@@ -49,6 +50,8 @@ public class PlayerContoller : MonoBehaviour
 
                     this.transform.SetParent(null);
                     dir = parent.GetMove();
+                    ///少し動かしてすぐに当たらないようにする
+                    transform.position += dir*2;
                     parent.SetMove(-dir);
                 
 
@@ -62,12 +65,15 @@ public class PlayerContoller : MonoBehaviour
                     if (Input.GetKey(KeyCode.W))
                     {
                         dir += transform.forward;
+                       
                     }
 
                     // Sキー（減速移動）
                     if (Input.GetKey(KeyCode.S))
                     {
                         dir -= transform.forward;
+                       
+
 
                     }
 
@@ -75,6 +81,8 @@ public class PlayerContoller : MonoBehaviour
                     if (Input.GetKey(KeyCode.D))
                     {
                         dir += transform.right;
+                        
+
 
                     }
 
@@ -82,10 +90,14 @@ public class PlayerContoller : MonoBehaviour
                     if (Input.GetKey(KeyCode.A))
                     {
                         dir -= transform.right;
+                       
+
 
                     }
+                    dir = dir.normalized;
                     Vector3 All_Power = parent.GetMove();
-                    parent.AddMove(dir * 1f / All_Power.magnitude * Time.deltaTime);
+                    All_Power.Normalize();
+                    parent.AddMove(dir * Time.deltaTime);
                     rb.useGravity = false;
                     rb.isKinematic = true;
 
@@ -96,7 +108,7 @@ public class PlayerContoller : MonoBehaviour
         {
             if (isJunp)
             {
-                dir = dir * 0.99f;
+                
                 transform.position += dir * Time.deltaTime;
 
             }
