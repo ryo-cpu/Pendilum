@@ -22,16 +22,14 @@ public class PendulumContoroller : MonoBehaviour
     public Vector3 GetMove()
     {
 
-        Vector3 Dir = Root.transform.position- transform.position;
-        Dir.y = 0;
+        Vector3 Dir = Move;
         Vector3 Dis = Root.transform.position-transform.position;
-        Dis.x = 0;
-        Dis.z = 0;
         Dir = Dir.normalized*Move.magnitude;
         Dis = Dis.normalized*tension.magnitude;
 
-        Vector3 P =-(Dir+Dis);
-        return P *10; 
+        Vector3 P =(Dir+Dis);
+        Debug.LogWarning(P);
+        return P*10 ; 
     }
 
 

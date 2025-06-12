@@ -90,14 +90,11 @@ public class PlayerContoller : MonoBehaviour
                     if (Input.GetKey(KeyCode.A))
                     {
                         dir -= transform.right;
-                       
-
-
                     }
                     dir = dir.normalized;
                     Vector3 All_Power = parent.GetMove();
                     All_Power.Normalize();
-                    parent.AddMove(dir * Time.deltaTime);
+                    parent.AddMove(dir * Time.deltaTime*10);
                     rb.useGravity = false;
                     rb.isKinematic = true;
 
@@ -144,8 +141,9 @@ public class PlayerContoller : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
 
-                    rb.linearVelocity = Vector3.up * MaxJunp;
+                    dir += Vector3.up * MaxJunp;
                     isJunp = true;
+                    Debug.Log(dir);
 
                 }
                 if (dir.magnitude > 10.0f)
