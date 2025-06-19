@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerContoller : MonoBehaviour
 {
-    public float MaxJunp = 10;
+    public float MaxJump = 10;
     public float speed = 10.0f;
     Rigidbody rb;
-    bool isJunp =false;
+    bool isJump =false;
     Vector3 dir;
     void Start()
     {
@@ -31,7 +31,6 @@ public class PlayerContoller : MonoBehaviour
             PendulumContoroller parent = transform.parent.GetComponent<PendulumContoroller>();
             if (parent == null)
             {
-                Debug.LogWarning("親に ParentScript がアタッチされていません");
 
             }
             else
@@ -47,7 +46,7 @@ public class PlayerContoller : MonoBehaviour
 
                     rb.useGravity = true;
                     rb.isKinematic = false;
-
+                    isJump = true;
                     this.transform.SetParent(null);
                     dir = parent.GetMove();
                     ///少し動かしてすぐに当たらないようにする
@@ -58,6 +57,9 @@ public class PlayerContoller : MonoBehaviour
                 }
                 else
                 {
+                    ///初期化
+                    isJump = false;
+   
                     ///くっついてる時の処理
                     dir = Vector3.zero;
                     ///playerの動きで振り子に干渉する
@@ -94,7 +96,7 @@ public class PlayerContoller : MonoBehaviour
                     dir = dir.normalized;
                     Vector3 All_Power = parent.GetMove();
                     All_Power.Normalize();
-                    parent.AddMove(dir * Time.deltaTime*10);
+                    parent.AddMove(dir * Time.deltaTime * 10);
                     rb.useGravity = false;
                     rb.isKinematic = true;
 
@@ -103,10 +105,10 @@ public class PlayerContoller : MonoBehaviour
         }
         else
         {
-            if (isJunp)
+            if (isJump)
             {
                 
-                transform.position += dir * Time.deltaTime;
+                transform.position += dir * speed / 20 * Time.deltaTime;
 
             }
             else
@@ -141,8 +143,9 @@ public class PlayerContoller : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
 
-                    dir += Vector3.up * MaxJunp;
-                    isJunp = true;
+                    dir += Vector3.up;
+                    dir = dir * MaxJump;
+                    isJump = true;
                     Debug.Log(dir);
 
                 }
@@ -151,21 +154,18 @@ public class PlayerContoller : MonoBehaviour
                     Vector3 NDir = dir.normalized;
                     dir = NDir * 10.0f;
                 }
-                transform.position += speed * dir * Time.deltaTime;
+                if (!isJump)
+                {
+                    transform.position += speed * dir * Time.deltaTime;
+                }
             }
         }
        
     }
     void OnCollisionEnter(Collision collision) 
     { 
-        if(collision.gameObject.name=="Terrain")
-        {
-            isJunp = false;
-        }
-        else
-        {
-            isJunp = true;
-        }
+        
+            isJump = false;
     }
     
 }

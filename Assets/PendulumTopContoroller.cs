@@ -28,8 +28,8 @@ public class PendulumContoroller : MonoBehaviour
         Dis = Dis.normalized*tension.magnitude;
 
         Vector3 P =(Dir+Dis);
-        Debug.LogWarning(P);
-        return P*10 ; 
+        Debug.LogWarning(Dir);
+        return Dir; 
     }
 
 
@@ -69,7 +69,7 @@ public class PendulumContoroller : MonoBehaviour
             Tension = Distance-(normalizDistance * RopeLength) ;
             tension = Tension;
 
-            Debug.LogWarning(Tension);
+           
         }
         else
         {

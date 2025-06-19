@@ -14,7 +14,10 @@ public class ScoreController:MonoBehaviour
     }
     public void Add(int score)
     {
+        Debug.LogWarning(Score);
         this.Score += score;
+        Debug.LogWarning(Score);
+
     }
     public int GetScore()
     {
@@ -22,6 +25,11 @@ public class ScoreController:MonoBehaviour
     }
     void UpdateScoreText()
     {
-        ScoreText.text = "Score: " + Score.ToString();
+        ScoreText.text = "Score: " + Score;
+    }
+
+    void Update()
+    {
+        UpdateScoreText();
     }
 }
