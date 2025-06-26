@@ -6,6 +6,7 @@ public class PlayerContoller : MonoBehaviour
     public float speed = 10.0f;
     Rigidbody rb;
     public float count = 50;
+    public BoxCollider collider;
     bool isJump =false;
     Vector3 dir;
     void Start()
@@ -31,6 +32,7 @@ public class PlayerContoller : MonoBehaviour
         if(count==10)
         {
             ///“–‚½‚è”»’è‚ğ—LŒø‚É‚·‚é
+            collider.enabled = true;
         }
         if (transform.parent != null)
         {
@@ -60,7 +62,7 @@ public class PlayerContoller : MonoBehaviour
                     ///­‚µ“®‚©‚µ‚Ä‚·‚®‚É“–‚½‚ç‚È‚¢‚æ‚¤‚É‚·‚é
                     transform.position += dir*2;
                     parent.SetMove(-dir);
-                
+                    collider.enabled = false;
 
                 }
                 else

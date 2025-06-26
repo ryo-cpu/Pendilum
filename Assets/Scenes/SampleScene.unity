@@ -138,6 +138,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxJump: 5
   speed: 100
+  count: 50
+  collider: {fileID: 385097088}
+--- !u!65 &385097088 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 4619087340491573717, guid: d683405efbc3e4649b7f2b98f91b6c1d, type: 3}
+  m_PrefabInstance: {fileID: 1930429355682286859}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &401860459
 PrefabInstance:
   m_ObjectHideFlags: 0
