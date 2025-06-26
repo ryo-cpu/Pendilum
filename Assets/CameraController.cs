@@ -8,13 +8,15 @@ public class CameraController :  MonoBehaviour
     public float sensitivityY = 2.0f; // c‰ñ“]‚ÌŠ´“x
     public float minY = -60f; // c‰ñ“]‚ÌÅ¬Šp“x
     public float maxY = 60f; // c‰ñ“]‚ÌÅ‘åŠp“x
-
+    public bool isRota = false;
     private float rotationX = 0f;
     private float rotationY = 0f;
 
     // Use this for initialization
     void Start()
     {
+        rotationX = this.transform.localEulerAngles.y;
+        rotationY = this.transform.localEulerAngles.x;
 
         //unitychan‚Ìî•ñ‚ğæ“¾
         this.player = GameObject.Find("Pobject");
@@ -25,19 +27,22 @@ public class CameraController :  MonoBehaviour
     }
     void Update()
     {
-        // ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğæ“¾
-        float mouseX = Input.GetAxis("Mouse X") * sensitivityX;
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivityY;
+        if (isRota)
+        {
+            // ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğæ“¾
+            float mouseX = Input.GetAxis("Mouse X") * sensitivityX;
+            float mouseY = Input.GetAxis("Mouse Y") * sensitivityY;
 
-        // c•ûŒü‚Ì‰ñ“]§ŒÀ‚ğİ‚¯‚é
-        rotationY -= mouseY;
-        rotationY = Mathf.Clamp(rotationY, minY, maxY);
+            // c•ûŒü‚Ì‰ñ“]§ŒÀ‚ğİ‚¯‚é
+            rotationY -= mouseY;
+            rotationY = Mathf.Clamp(rotationY, minY, maxY);
 
-        // ‰¡‰ñ“]‚Í‚»‚Ì‚Ü‚Ü‰ÁZ
-        rotationX += mouseX;
+            // ‰¡‰ñ“]‚Í‚»‚Ì‚Ü‚Ü‰ÁZ
+            rotationX += mouseX;
 
-        // ‰ñ“]‚ğ“K—p
-        transform.localRotation = Quaternion.Euler(rotationY, rotationX, 0);
+            // ‰ñ“]‚ğ“K—p
+            transform.localRotation = Quaternion.Euler(rotationY, rotationX, 0);
+        }
         transform.position = player.transform.position + offset;
     }
     

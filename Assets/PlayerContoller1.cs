@@ -5,6 +5,7 @@ public class PlayerContoller : MonoBehaviour
     public float MaxJump = 10;
     public float speed = 10.0f;
     Rigidbody rb;
+    public float count = 50;
     bool isJump =false;
     Vector3 dir;
     void Start()
@@ -24,7 +25,13 @@ public class PlayerContoller : MonoBehaviour
    
     void Update()
     {
+        count = count + 1;
         transform.rotation = Quaternion.LookRotation(Vector3.zero);
+        
+        if(count==10)
+        {
+            ///ìñÇΩÇËîªíËÇóLå¯Ç…Ç∑ÇÈ
+        }
         if (transform.parent != null)
         {
 
@@ -49,6 +56,7 @@ public class PlayerContoller : MonoBehaviour
                     isJump = true;
                     this.transform.SetParent(null);
                     dir = parent.GetMove();
+                    count = 0;
                     ///è≠ÇµìÆÇ©ÇµÇƒÇ∑ÇÆÇ…ìñÇΩÇÁÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
                     transform.position += dir*2;
                     parent.SetMove(-dir);

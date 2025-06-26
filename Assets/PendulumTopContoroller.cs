@@ -26,7 +26,7 @@ public class PendulumContoroller : MonoBehaviour
         Vector3 Dis = Root.transform.position-transform.position;
         Dir = Dir.normalized*Move.magnitude;
         Dis = Dis.normalized*tension.magnitude;
-
+        Dir.y=tension.y;
         Vector3 P =(Dir+Dis);
         Debug.LogWarning(Dir);
         return Dir; 
@@ -96,7 +96,9 @@ public class PendulumContoroller : MonoBehaviour
             if (player != null&&player.transform.parent == null)
             {
                 Vector3 M=Move;
+                Debug.Log("Collison");
                 Move = player.SendMove();
+                Move.y = 0;
                 player.SetDir(M * Time.deltaTime);
                 if (Input.GetMouseButton(0))
                 {
