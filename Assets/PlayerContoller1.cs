@@ -9,10 +9,21 @@ public class PlayerContoller : MonoBehaviour
     public BoxCollider collider;
     bool isJump =false;
     Vector3 dir;
+    Vector3 jumpdir;
+    public LayerMask wallLayer;
+
+    bool WillCollide(Vector3 moveDir)
+    {
+        Vector3 futurePos = transform.position + moveDir;
+        float radius = transform.localScale.x*0.5f;
+
+        return Physics.CheckSphere(futurePos, radius, wallLayer);
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         dir = Vector3.zero;
+        jumpdir = Vector3.up;
     }
    public Vector3 SendMove()
     {
@@ -29,7 +40,7 @@ public class PlayerContoller : MonoBehaviour
         count = count + 1;
         transform.rotation = Quaternion.LookRotation(Vector3.zero);
         
-        if(count==10)
+        if(count==100)
         {
             ///“–‚½‚è”»’è‚ð—LŒø‚É‚·‚é
             collider.enabled = true;
@@ -153,7 +164,7 @@ public class PlayerContoller : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
 
-                    dir += Vector3.up;
+                    dir += jumpdir;
                     dir = dir * MaxJump;
                     isJump = true;
                     Debug.Log(dir);
@@ -164,7 +175,7 @@ public class PlayerContoller : MonoBehaviour
                     Vector3 NDir = dir.normalized;
                     dir = NDir * 10.0f;
                 }
-                if (!isJump)
+                if (!isJump&&WillCollide(speed * dir * Time.deltaTime))
                 {
                     transform.position += speed * dir * Time.deltaTime;
                 }
@@ -176,7 +187,9 @@ public class PlayerContoller : MonoBehaviour
     { 
         
             isJump = false;
+            dir=Vector3.zero;
+            ContactPoint contact = collision.contacts[0];
+            jumpdir = (contact.normal + Vector3.up).normalized;
     }
-    
-}
+    }
 

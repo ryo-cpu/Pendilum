@@ -11,7 +11,16 @@ public class CameraController :  MonoBehaviour
     public bool isRota = false;
     private float rotationX = 0f;
     private float rotationY = 0f;
+    void Move(Vector3 MoveVector)
+    {
 
+        transform.position = transform.position + MoveVector;
+        offset = transform.position - player.transform.position;
+    }
+    void Rota(Vector3 RotaVector)
+    {
+        transform.localRotation = Quaternion.Euler(RotaVector.x,RotaVector.y,RotaVector.z);
+    }
     // Use this for initialization
     void Start()
     {
@@ -41,7 +50,7 @@ public class CameraController :  MonoBehaviour
             rotationX += mouseX;
 
             // ‰ñ“]‚ð“K—p
-            transform.localRotation = Quaternion.Euler(rotationY, rotationX, 0);
+          
         }
         transform.position = player.transform.position + offset;
     }
